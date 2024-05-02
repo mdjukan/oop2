@@ -28,7 +28,7 @@ class Prevoznik extends Frame {
 			Putanja p1 = new Putanja("Loznica-Beograd");
 			p1.dodajPut(new Put(100, 1000, gradovi[3], gradovi[2]));
 			p1.dodajPut(new Put(111, 1233, gradovi[2], gradovi[0]));
-			double[] vc1 = {1000, 2000, 3000};
+			double[] vc1 = {5000, 5000, 5000};
 			dodajAutobus(new Autobus(p1, 3, vc1));
 		}
 
@@ -61,7 +61,6 @@ class Prevoznik extends Frame {
 		add(panel, "North");
 
 		panel = new Panel();
-		System.out.println(autobusi.size());
 		panel.setLayout(new GridLayout(1, autobusi.size()));
 		for (Autobus autobus : autobusi) {
 			panel.add(autobus);
@@ -85,7 +84,6 @@ class Prevoznik extends Frame {
 		});
 
 		dodaj.addActionListener((e)->{
-			System.out.println("AH");
 			Grad pocetni = gradOdNaziva(pocetak.getSelectedItem());
 			Grad krajnji = gradOdNaziva(kraj.getSelectedItem());
 			Putnik putnik = new Putnik(pocetni, krajnji);
@@ -93,17 +91,15 @@ class Prevoznik extends Frame {
 			Autobus min = null;
 			double cena = Double.MAX_VALUE;
 			for (Autobus autobus : autobusi) {
-				if (cena > autobus.putanja.cenaOdDo(pocetni, krajnji)) {
+				double trenutnaCena = autobus.putanja.cenaOdDo(pocetni, krajnji);
+				if (cena > trenutnaCena) {
 					min = autobus;
+					cena = trenutnaCena;
 				}
 			}
-
-			System.out.println(autobusi.size());
-			System.out.println(min==null);
-			System.out.println(cena);
-			//if (cena!=Double.MAX_VALUE) {
+			if (cena!=Double.MAX_VALUE) {
 				min.primiPutnika(putnik);
-			//}
+			}
 		});
 	}
 

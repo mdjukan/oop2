@@ -30,14 +30,14 @@ class Radnik extends Thread {
 			while (!Thread.interrupted()) {
 				synchronized (red) {
 					while ((karta=red.uzmi())==null) {
-						wait();
+						red.wait();
 					}
 				}
 
 				if (voznja.mozeSeVoziti(karta.dohvatiPosetioca())) {
 					synchronized (voznja) {
 						while (!voznja.dodajPosetioca(karta.dohvatiPosetioca())) {
-							wait();
+							voznja.wait();
 						}
 					}
 					zarada += karta.cena();

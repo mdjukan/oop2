@@ -16,6 +16,11 @@ class Park extends Frame {
 		voznje.add(new Voznja("Kamikaza", 200, 160, 12, 3, 2, 3000));
 		radnici.add(new Radnik("Pera", voznje.get(0)));
 		radnici.add(new Radnik("Mika", voznje.get(1)));
+
+		voznje.get(0).start();
+		voznje.get(1).start();
+		radnici.get(0).start();
+		radnici.get(1).start();
 	}
 
 	void dodajElemente() {

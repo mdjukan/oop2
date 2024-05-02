@@ -18,7 +18,6 @@ class Voznja extends Thread {
 		return prikaz;
 	}
 
-
 	void inicijalizujPanel() {
 		prikaz.setLayout(new BorderLayout());
 		prikaz.add(new Label(naziv), "North");

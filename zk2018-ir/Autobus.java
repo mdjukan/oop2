@@ -63,6 +63,12 @@ class Autobus extends TextArea implements Runnable {
 		}
 	}
 
+	void azurirajPrikaz(Stanje stanje) {
+			this.stanje = stanje;
+			setText(this.toString());
+			postaviBoju();
+	}
+
 	@Override
 	public void run() {
 		setText(this.toString());
@@ -77,29 +83,29 @@ class Autobus extends TextArea implements Runnable {
 			}
 		}
 
-		for (int i=0; i<putanja.brojGradova(); ++i) {
+		for (int i=1; i<putanja.brojGradova()-1; ++i) {
+			azurirajPrikaz(Stanje.Vozi);
+			try {
+				Thread.sleep((int)putanja.putevi.get(i-1).trajanje());
+			} catch (InterruptedException e) {}
+
 			trenutniGrad = putanja.dohvatiGrad(i);
-			ispustiPutnike();
-			stanje = Stanje.NaStanici;
-			setText(this.toString());
-			postaviBoju();
+k		ispustiPutnike();
+			azurirajPrikaz(Stanje.NaStanici);
 
 			try {
 				Thread.sleep((int)vremeCekanja[i]);
 			} catch (InterruptedException e) {}
-
-			stanje = Stanje.Vozi;
-			setText(this.toString());
-			postaviBoju();
-			setBackground(Color.GREEN);
-			try {
-				Thread.sleep((int)putanja.putevi.get(i).trajanje());
-			} catch (InterruptedException e) {}
 		}
 
-		stanje = Stanje.Kraj;
-		setText(this.toString());
-		postaviBoju();
+		azurirajPrikaz(Stanje.Vozi);
+		try {
+			Thread.sleep((int)putanja.putevi.get(putanja.putevi.size()-1).trajanje());
+		} catch (InterruptedException e) {}
+
+		trenutniGrad = putanja.dohvatiGrad(putanja.brojGradova()-1);
+		ispustiPutnike();
+		azurirajPrikaz(Stanje.Kraj);
 	}
 
 	@Override

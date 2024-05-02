@@ -25,6 +25,12 @@ class Svemir extends Canvas implements Runnable {
 		}
 
 		letelica.naslikaj(g);
+
+		if (!radi) {
+			g.setFont(new Font("Arial", Font.BOLD, 24));
+			g.setColor(Color.WHITE);
+			g.drawString("Pauza!", 60, getHeight()/2 );
+		}
 	}
 
 	int preklapanjePlaneta() {
@@ -84,6 +90,7 @@ class Svemir extends Canvas implements Runnable {
 
 	void pauziraj() {
 		radi = false;
+		repaint();
 	}
 
 synchronized void nastavi() {

@@ -23,7 +23,8 @@ class Put {
 	}
 
 	double trajanje() {
-		return duzina()/brzina;
+		return 5000;
+		//return duzina()/brzina;
 	}
 
 	@Override

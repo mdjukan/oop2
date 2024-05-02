@@ -3,8 +3,8 @@ import java.awt.event.*;
 
 class Simulator extends Frame {
 	Button pokreni = new Button("Pokreni!");
-	Button zaustavi = new Button("Zaustavi!");
-	Button nastavi = new Button("Nastavi!");
+	Button zaustavi = new Button("Zaustavi!"); // pauza se pojavljuje
+	Button nastavi = new Button("Nastavi!");  // pauza nestaje
 	Label poeni = new Label("Poeni: 0");
 
 	Svemir svemir = new Svemir(poeni);
