@@ -1,0 +1,3 @@
+enum Stanje {
+	Slobodan, Porucio;
+}
