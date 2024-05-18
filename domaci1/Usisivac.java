@@ -8,40 +8,32 @@ class Usisivac extends Figura {
 	}
 
 	Usisivac(int x, int y) {
-		super(x, y, 50);
+		super(x, y, 15);
 		pomeraj = 15/2;
-
-		System.out.println("x->"+ x);
-		System.out.println("y->"+ y);
 	}
 
 private	int[] xs() {
-		int[] theta = {-30, 90, 210};
+		int[] theta = {330, 90, 210};
 		int[] xs = new int[3];
 		for (int i=0; i<3; ++i) {
-			xs[i] = (int)(x() + r() * Math.cos(theta[i]));
+			xs[i] = (int)(x() + r() * Math.cos(theta[i] * Math.PI/180));
 		}
-
-		xs[0] = xs[1];
 
 		return xs;
 	}
 
 private	int[] ys() {
-		int[] theta = {-30, 90, 210};
+		int[] theta = {330, 90, 210};
 		int[] ys = new int[3];
 		for (int i=0; i<3; ++i) {
-			ys[i] = (int)(y() - r() * Math.sin(theta[i]));
+			ys[i] = (int)(y() - r() * Math.sin(theta[i] * Math.PI/180));
 		}
-
-		ys[0] = ys[1];
 
 		return ys;
 }
 	
 	@Override
 	void naslikaj(Graphics g) {
-		System.out.println("usisivac naslikan!");
 		int[] xs = xs();
 		int[] ys = ys();
 		g.setColor(Color.RED);
@@ -62,7 +54,7 @@ private	int[] ys() {
 		return true;
 	}
 
-	void pomeri(Smer smer) {
+	void pomeriUSmeru(Smer smer) {
 		switch (smer) {
 			case GORE:
 				postaviY(y()-pomeraj);
@@ -78,4 +70,24 @@ private	int[] ys() {
 				break;
 		}
 	}
+
+void pomeri(Figura najbliza) {
+	int dx = x() - najbliza.x();
+	int dy = y() - najbliza.y();
+	if (Math.abs(dx)>pomeraj) {
+		if (dx < 0) {
+			pomeriUSmeru(Smer.DESNO);
+		} else {
+			pomeriUSmeru(Smer.LEVO);
+		}
+	} else {
+		if (dy < 0) {
+			pomeriUSmeru(Smer.DOLE);
+		} else {
+			pomeriUSmeru(Smer.GORE);
+		}
+	}
+}
+
+//pomeri
 }

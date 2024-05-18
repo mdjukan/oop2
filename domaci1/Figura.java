@@ -34,13 +34,16 @@ abstract class Figura {
 	double rastojanje(Figura f) {
 		int dx = x - f.x();
 		int dy = y - f.y();
-		return Math.sqrt(dx*dx - dy*dy);
+		return Math.sqrt(dx*dx + dy*dy);
 	}
 
 	boolean preklapa(Figura f) {
 		double d = rastojanje(f);
-		if (d<Math.abs(r-f.r())) return false; //jedan je unutar drugog
-		return rastojanje(f)<r+f.r(); //sekuse
+		if (d<Math.abs(r-f.r()))  {
+			System.out.println("unutar");
+			return false; //jedan je unutar drugog
+		}
+		return d<r+f.r();
 	}
 
 	//vraca true ako this obuhvata f

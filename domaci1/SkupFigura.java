@@ -18,31 +18,28 @@ class SkupFigura {
 		return false;
 	}
 
-	void dodajFiguru(Figura f) throws Greska {
-		if (sadrzi(f)) throw new Greska("Figura je vec u skupu!");
-
-		boolean preklapa = false;
-
+	boolean preklapa(Figura f) {
 		for (Figura figura : figure) {
 			if (figura.preklapa(f)) {
-				preklapa = true;
+				return true;
 			}
 		}
 
-		if (preklapa) throw new Greska("Preklapa se sa figurom skupa!");
+		return false;
+	}
 
+	void dodajFiguru(Figura f) throws Greska {
+		if (sadrzi(f)) throw new Greska("Figura je vec u skupu!");
+		if (preklapa(f)) throw new Greska("Preklapa se sa figurom skupa!");
 		figure.add(f);
 	}
 
-	/*
-	void prvaTekuca() throws Greska {
-		if (figure.size()==0) throw new Greska("Skup je prazan!"); //?
-		tekuca = figure.get(0);
-	}
-	*/
-
 	void prvaTekuca() {
-		tekuca = figure.get(0);
+		if (brojFigura()==0) {
+			tekuca = null;
+		} else {
+			tekuca = figure.get(0);
+		}
 	}
 
 	boolean postojiSledeca() {
@@ -59,8 +56,19 @@ class SkupFigura {
 	}
 
 	void izbaci(Figura f) {
-		//sta ako sam izbacio tekucu?
-		//ostaje ista vred. a nije vise nizu?
+		if (sadrzi(f) && brojFigura()==1) {
+			figure.remove(f);
+			tekuca = null;
+		}
+
+		if (f==tekuca) {
+			try {
+				sledecaTekuca();
+			} catch (Greska g) {
+				prvaTekuca(); //zatvaranje moguceg problema L -> F
+			}
+		}
+
 		if (sadrzi(f)) {
 			figure.remove(f);
 		}
@@ -70,8 +78,8 @@ class SkupFigura {
 		return figure.size();
 	}
 
-	//najbliza figura skupu figuri f
 	Figura najbliza(Figura f) {
+
 		Figura minFigura = null;
 
 		for (Figura figura : figure) {
@@ -90,5 +98,4 @@ class SkupFigura {
 			f.naslikaj(g);
 		}
 	}
-
 }

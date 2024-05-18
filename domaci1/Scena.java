@@ -1,6 +1,9 @@
 import java.awt.*;
 
 class Scena extends Canvas implements Runnable {
+	//TODO dimenzije scene ---> sta ako dim nisu 500x500 ---> dugme
+	static final int WIDTH = 500;
+	static final int HEIGHT = 500;
 	static final int dt = 50;
 
 	private Simulacija sim;
@@ -10,15 +13,14 @@ class Scena extends Canvas implements Runnable {
 	Scena(Simulacija sim) {
 		setBackground(Color.GRAY);
 		this.sim = sim;
-		
-		try {
-			skupFigura.dodajFiguru(new	Usisivac(250,250));
-			skupFigura.prvaTekuca();
-		} catch (Greska g) {}
 
 		nit.start();
 		repaint();
-		//da li moze odmah getWidth(), getHeight() ??? --> nema dim
+	}
+
+	void dodajUsisivac() {
+		dodajFiguru(new	Usisivac(getWidth()/2, getHeight()/2));
+		skupFigura.prvaTekuca();
 	}
 
 	@Override
@@ -38,7 +40,11 @@ class Scena extends Canvas implements Runnable {
 		if (figura.stajeNaScenu(getWidth(), getHeight())) {
 			try {
 				skupFigura.dodajFiguru(figura);
-			} catch (Greska g) {}
+			} catch (Greska g) {
+				System.out.println("Nije uspelo dodavanje!");
+			}
+		} else {
+			System.out.println("Ne staje na scenu!");
 		}
 
 		if (radi==false && skupFigura.brojFigura()==2 && preDodavanja==1) {
@@ -50,6 +56,7 @@ class Scena extends Canvas implements Runnable {
 	synchronized void ukloniFiguru(Figura figura) {
 		skupFigura.izbaci(figura);
 		if (skupFigura.brojFigura()==1) {
+			System.out.println("Scena pauzirana!");
 			radi = false;
 		}
 	}
@@ -64,28 +71,13 @@ class Scena extends Canvas implements Runnable {
 					}
 				}
 
+				/// Sta ako tekuca figura nije usisivac
 				Usisivac usisivac = (Usisivac)skupFigura.tekuca();
-
 				Figura najbliza = skupFigura.najbliza(usisivac);
-
 				if (usisivac.preklapa(najbliza)) {
 					ukloniFiguru(najbliza);
 				} else {
-					int dx = usisivac.x() - najbliza.x();
-					int dy = usisivac.y() - najbliza.y();
-					if (Math.abs(dx)>usisivac.pomeraj()) {
-						if (dx < 0) {
-							usisivac.pomeri(Smer.DESNO);
-						} else {
-							usisivac.pomeri(Smer.LEVO);
-						}
-					} else {
-						if (dy < 0) {
-							usisivac.pomeri(Smer.DOLE);
-						} else {
-							usisivac.pomeri(Smer.GORE);
-						}
-					}
+					usisivac.pomeri(najbliza);
 				}
 
 				repaint();

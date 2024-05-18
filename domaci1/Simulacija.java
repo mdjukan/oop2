@@ -11,6 +11,11 @@ class Simulacija extends Frame {
 
 		dodajElemente();
 		dodajOsluskivace();
+
+		doLayout();
+		validate();
+
+		scena.dodajUsisivac();
 	}
 
 	void dodajOsluskivace() {
@@ -20,12 +25,40 @@ class Simulacija extends Frame {
 				dispose();
 			}
 		});
+
+		scena.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton()==MouseEvent.BUTTON1) {
+					scena.dodajFiguru(new Kamencic(e.getX(), e.getY()));
+				}
+			}
+		});
+
+		scena.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_SPACE:
+						if (scena.radi()) {
+							scena.pauziraj();
+						} else {
+							scena.pokreni();
+						}
+						break;
+					case KeyEvent.VK_ESCAPE:
+						scena.zaustavi();
+						dispose();
+						break;
+				}
+			}
+		});
 	}
 
 	void dodajElemente() {
 		Panel panel = new Panel();
 		panel.setLayout(new GridLayout(1,1));
-		panel.add(new Scena(this));
+		panel.add(scena);
 		add(panel, "Center");
 	}
 
@@ -33,3 +66,17 @@ class Simulacija extends Frame {
 		new Simulacija();
 	}
 }
+
+//[1]
+//Generator === je runnable === da svako dt postavi kamencic na random x,y
+//Scena ima svoj generator
+//
+//[2]
+//Igrac === plavi kvadrat === ima svoj pomeraj === reaguje na strelice
+//Kao usisvac skuplja kamencice
+//Ako ga sretene usisivac game over
+//labela u kojoj pise broj kamencia koje igrac prikujue
+//broj kamencica koje je usisivac prikupuio
+//
+//[3]
+//input field x, y dugme dodaj kamencic na uneto x,y
