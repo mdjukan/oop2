@@ -10,7 +10,7 @@ class SkupFigura {
 		return tekuca;
 	}
 
-	boolean sadrzi(Figura f) {
+	synchronized boolean sadrzi(Figura f) {
 		for (Figura figura : figure) {
 			if (f==figura) return true;
 		}
@@ -18,7 +18,7 @@ class SkupFigura {
 		return false;
 	}
 
-	boolean preklapa(Figura f) {
+	synchronized boolean preklapa(Figura f) {
 		for (Figura figura : figure) {
 			if (figura.preklapa(f)) {
 				return true;
@@ -28,7 +28,7 @@ class SkupFigura {
 		return false;
 	}
 
-	void dodajFiguru(Figura f) throws Greska {
+	synchronized void dodajFiguru(Figura f) throws Greska {
 		if (sadrzi(f)) throw new Greska("Figura je vec u skupu!");
 		if (preklapa(f)) throw new Greska("Preklapa se sa figurom skupa!");
 		figure.add(f);
@@ -42,20 +42,20 @@ class SkupFigura {
 		}
 	}
 
-	boolean postojiSledeca() {
+	synchronized boolean postojiSledeca() {
 		return figure.indexOf(tekuca)<figure.size()-1;
 	}
 
-	void sledecaTekuca() throws Greska {
+	synchronized void sledecaTekuca() throws Greska {
 		if (!postojiSledeca()) throw new Greska("Ne postoji sledeca!");
 		tekuca = figure.get(figure.indexOf(tekuca)+1);
 	}
 
-	void isprazniSlup() {
+	synchronized void isprazniSlup() {
 		figure.clear();
 	}
 
-	void izbaci(Figura f) {
+	synchronized void izbaci(Figura f) {
 		if (sadrzi(f) && brojFigura()==1) {
 			figure.remove(f);
 			tekuca = null;
@@ -74,11 +74,11 @@ class SkupFigura {
 		}
 	}
 
-	int brojFigura() {
+	synchronized int brojFigura() {
 		return figure.size();
 	}
 
-	Figura najbliza(Figura f) {
+	synchronized Figura najbliza(Figura f) {
 
 		Figura minFigura = null;
 
@@ -93,7 +93,7 @@ class SkupFigura {
 		return minFigura;
 	}
 
-	void naslikaj(Graphics g) {
+	synchronized void naslikaj(Graphics g) {
 		for (Figura f : figure) {
 			f.naslikaj(g);
 		}

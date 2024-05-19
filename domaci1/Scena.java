@@ -1,14 +1,12 @@
 import java.awt.*;
 
 class Scena extends Canvas implements Runnable {
-	//TODO dimenzije scene ---> sta ako dim nisu 500x500 ---> dugme
-	static final int WIDTH = 500;
-	static final int HEIGHT = 500;
 	static final int dt = 50;
 
 	private Simulacija sim;
 	private SkupFigura skupFigura = new SkupFigura();
 	private Thread nit = new Thread(this);
+	private Usisivac usisivac;
 
 	Scena(Simulacija sim) {
 		setBackground(Color.GRAY);
@@ -19,7 +17,8 @@ class Scena extends Canvas implements Runnable {
 	}
 
 	void dodajUsisivac() {
-		dodajFiguru(new	Usisivac(getWidth()/2, getHeight()/2));
+		usisivac = new	Usisivac(getWidth()/2, getHeight()/2);
+		dodajFiguru(usisivac);
 		skupFigura.prvaTekuca();
 	}
 
@@ -71,8 +70,6 @@ class Scena extends Canvas implements Runnable {
 					}
 				}
 
-				/// Sta ako tekuca figura nije usisivac
-				Usisivac usisivac = (Usisivac)skupFigura.tekuca();
 				Figura najbliza = skupFigura.najbliza(usisivac);
 				if (usisivac.preklapa(najbliza)) {
 					ukloniFiguru(najbliza);
