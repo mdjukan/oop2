@@ -1,0 +1,3 @@
+enum Rezim {
+	SLOVA, BROJEVI;
+}
