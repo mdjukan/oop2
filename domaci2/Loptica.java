@@ -1,13 +1,13 @@
 import java.awt.*;
 
 class Loptica extends AktivnaFigura {
-	private int r;
-	Loptica(Scena scena, int x, int y, int dt, int r) {
+	private double r;
+	Loptica(Scena scena, double x, double y, int dt, double r) {
 		super(scena, Color.GREEN, x, y, 'L', -1.0+2*Math.random(), -Math.random(), dt);
 		this.r = r;
 	}
 
-	int r() {
+	double r() {
 		return r;
 	}
 
@@ -26,21 +26,21 @@ class Loptica extends AktivnaFigura {
 
 				pomeri();
 
-				TipSudara sudar = TipSudara.NEMA_SUDARA;
-
 				synchronized (scena()) {
 					for (Figura figura : scena().figure()) {
 						if (figura instanceof Cigla) {
-							sudar =  ((Cigla)figura).sudar(this);
+							TipSudara sudar =  ((Cigla)figura).sudar(this);
+							obradiSudar(sudar);
+
 							if (sudar!=TipSudara.NEMA_SUDARA) {
 								((Cigla)figura).pogodi();
-								obradiSudar(sudar);
 								break;
 							}
 						} else if (figura instanceof Igrac) {
-							sudar =  ((Igrac)figura).sudar(this);
+							TipSudara sudar =  ((Igrac)figura).sudar(this);
+							obradiSudar(sudar);
+
 							if (sudar!=TipSudara.NEMA_SUDARA) {
-								obradiSudar(sudar);
 								break;
 							}
 						}
@@ -75,6 +75,6 @@ class Loptica extends AktivnaFigura {
 	@Override
 	void iscrtaj(Graphics g) {
 		g.setColor(boja());
-		g.fillOval(x()-r()/2, y()-r()/2, r(), r());
+		g.fillOval((int)(x()-r()/2), (int)(y()-r()/2), (int)r(), (int)r());
 	}
 }

@@ -6,7 +6,7 @@ abstract class AktivnaFigura extends Figura implements Runnable {
 
 	private Thread nit = new Thread(this);
 
-	AktivnaFigura(Scena scena, Color boja, int x, int y, char vrsta, double dx, double dy, int dt) {
+	AktivnaFigura(Scena scena, Color boja, double x, double y, char vrsta, double dx, double dy, int dt) {
 		super(scena, boja, x, y, vrsta);
 		this.dx = dx;
 		this.dy = dy;
@@ -14,8 +14,8 @@ abstract class AktivnaFigura extends Figura implements Runnable {
 	}
 
 	void pomeri() {
-		postaviX(x() + (int)dx);
-		postaviY(y() + (int)dy);
+		postaviX(x()+dx);
+		postaviY(y()+dy);
 	}
 
 	void pokreni() {

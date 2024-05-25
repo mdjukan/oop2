@@ -13,6 +13,8 @@ class IgraLoptica extends Frame {
 
 		doLayout();
 		validate();
+		scena.setFocusable(true);
+		scena.requestFocusInWindow();
 
 		scena.inicijalizuj();
 		scena.pokreni();
@@ -30,14 +32,14 @@ class IgraLoptica extends Frame {
 			}
 		});
 
-		int POMERAJ_IGRAC = 10;
 		scena.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+
 				if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-					scena.igrac().pomeri(-POMERAJ_IGRAC, 0);
+					scena.igrac().pomeri(Smer.LEVO);
 				} else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-					scena.igrac().pomeri(POMERAJ_IGRAC, 0);
+					scena.igrac().pomeri(Smer.DESNO);
 				}
 			}
 		});

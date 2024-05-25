@@ -2,11 +2,11 @@ import java.awt.*;
 
 abstract class Figura {
 	private Scena scena;
-	private int x, y;
+	private double x, y;
 	private char vrsta;
 	private Color boja;
 
-	Figura(Scena scena, Color boja, int x, int y, char vrsta) {
+	Figura(Scena scena, Color boja, double x, double y, char vrsta) {
 		this.scena = scena;
 		this.boja = boja;
 		this.x = x;
@@ -22,8 +22,8 @@ abstract class Figura {
 	abstract void iscrtaj(Graphics g);
 
 	void pomeri(double dx, double dy) {
-		x += (int)dx;
-		y += (int)dy;
+		x += dx;
+		y += dy;
 	}
 
 	char vrsta() {
@@ -34,11 +34,11 @@ abstract class Figura {
 		return boja;
 	}
 
-	int x() {
+	double x() {
 		return x;
 	}
 
-	int y() {
+	double y() {
 		return y;
 	}
 
@@ -50,11 +50,11 @@ abstract class Figura {
 		this.boja = boja;
 	}
 
-	void postaviX(int x) {
+	void postaviX(double x) {
 		this.x = x;
 	}
 
-	void postaviY(int y) {
+	void postaviY(double y) {
 		this.y = y;
 	}
 }

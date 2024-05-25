@@ -1,0 +1,3 @@
+enum Smer {
+	LEVO, DESNO;
+}
