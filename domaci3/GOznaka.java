@@ -1,0 +1,2 @@
+class GOznaka extends Exception {
+}
