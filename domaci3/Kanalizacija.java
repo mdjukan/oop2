@@ -20,8 +20,9 @@ class Kanalizacija extends Panel {
 
 	Kanalizacija(int visina, int sirina) {
 		setLayout(new FlowLayout());
-		okvir.setLayout(new GridLayout(visina, sirina));
-		okvir.setSize(sirina*Kvadrat.h, visina*Kvadrat.h);
+
+		okvir.setLayout(new GridLayout(visina, sirina, 1, 1));
+		okvir.setSize(sirina*Kvadrat.h + sirina-1, visina*Kvadrat.h + visina-1);
 
 		this.visina = visina;
 		this.sirina = sirina;
@@ -51,7 +52,7 @@ class Kanalizacija extends Panel {
 		if (oznaceni==null) return;
 		kvadrati.set(kvadrati.indexOf(oznaceni), novi);
 		oznaceni = novi;
-		System.out.println(novi==null);
+		novi.oznacen = true;
 		popuniOkvir();
 	}
 }
